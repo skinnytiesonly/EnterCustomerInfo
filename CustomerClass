@@ -1,0 +1,103 @@
+
+namespace CustomerInformation
+{
+    class Customer
+    {
+        string firstName;
+        public string lastName;
+        string DOB;
+        string zip;
+        string subMonth;
+        
+
+        public Customer(string first, string last, string dob, string zip, string sub)
+        {
+            firstName = first;
+            lastName = last;
+            DOB = dob;
+            this.zip = zip;
+            subMonth = sub;
+        }
+
+        public string SetCC()
+        {
+            firstName = FixName(firstName);
+            lastName = FixName(lastName);
+
+            string cc = lastName + DOB[8] + DOB[9] + 
+                        (firstName.Length + lastName.Length) +
+                        Month() + zip[3] + zip[4];
+            return cc;
+        }
+
+        public string Month()
+        {
+            int month = int.Parse(subMonth);
+
+            switch (month)
+            {
+                case 1:
+                    return "Jan";
+                    
+                case 2:
+                    return "Feb";
+                    
+                case 3:
+                    return "Mar";
+                    
+                case 4:
+                    return "Apr";
+                    
+                case 5:
+                    return "May";
+                   
+                case 6:
+                    return "Jun";
+                   
+                case 7:
+                    return "Jul";
+          
+                case 8:
+                    return "Aug";
+           
+                case 9:
+                    return "Sep";
+              
+                case 10:
+                    return "Oct";
+                 
+                case 11:
+                    return "Nov";
+            
+                case 12:
+                    return "Dec";
+                
+                default:
+                    return "XXX";
+               
+            }//end switch
+        }//end month
+
+        public void Print()
+        {
+            
+            string CC = SetCC();
+
+            Console.WriteLine("{0} {1}", firstName, lastName);
+            Console.WriteLine("DOB: {0}", DOB);
+            Console.WriteLine("Zip: {0}", zip);
+            Console.WriteLine("Mo: {0}", Month());
+            Console.WriteLine("CC: {0}", CC);
+        }
+
+        string FixName(string name)
+        {
+            //converts the first letter name to uppercase
+            //converts all other letters to lower case
+            //found at: stackoverflow.com/questions/1206019/converting-string-to-title-case
+
+            TextInfo title = new CultureInfo("en-US", false).TextInfo;
+            return title.ToTitleCase(name.ToLower());
+        }
+    }
+}
