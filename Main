@@ -1,0 +1,194 @@
+
+namespace CustomerInformation
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //Customer cust1 = new Customer("Fred", "Joe", "11/12/1990", "33328", "1");
+
+            //cust1.Print();
+
+            List<Customer> customers = new List<Customer>();
+
+            string f = " ", l = " ", dob =" ", zip = " ", mo = " ";//initialize values
+            bool exit = false;
+
+            while (!exit)
+            {
+                
+                Console.Write("Enter your first and last name separated by a space: ");
+          
+                bool nameVerified = false;
+
+                //verifed name is input correctly as First {Space} Last
+                while (!nameVerified)
+                {
+                    try
+                    {
+                        string name = Console.ReadLine();
+                        if (!name.Contains(' '))
+                        {
+                            throw new ArgumentException();
+                        }
+                        else
+                        {
+                            string [] fir_last = name.Split(' ');
+                            f = fir_last[0];
+                            l = fir_last[1];
+
+                            nameVerified = true;
+                        }
+                    }
+                    catch (ArgumentException a)
+                    {
+                        Console.WriteLine("First and Last name was not separated with a space.");
+                        Console.WriteLine("Try again...");
+                    }
+
+                }//end name verification
+
+
+
+
+                /*************************************************************/
+
+
+
+
+
+                Console.WriteLine("Enter your Date of birth as mm/dd/yyyy: ");
+                
+                bool dateVerified = false;
+
+                //verifed DOB is input correctly as mm/dd/yyyy
+                while (!dateVerified)
+                {
+                    try
+                    {
+                        string date = Console.ReadLine();
+                        if (!date.Contains('/'))
+                        {
+                            throw new ArgumentException();
+                        }
+                        else
+                        {
+                            dob = date;
+                            dateVerified = true;
+                        }
+                    }
+                    catch (ArgumentException b)
+                    {
+                        Console.WriteLine("DOB was not in correct format .");
+                        Console.WriteLine("Try again...");
+                    }
+                }//end date verification
+
+
+
+
+                /*************************************************************/
+
+
+
+
+
+                Console.WriteLine("Enter your Zip code as #####: ");
+
+                bool zipVerified = false;
+
+                //verifed zip is input correctly as XXXXX
+                while (!zipVerified)
+                {
+                    try
+                    {
+                        string z = Console.ReadLine();
+                        if (z.Length != 5)
+                        {
+                            throw new ArgumentException();
+                        }
+                        else
+                        {
+                            zip = z;
+                            zipVerified = true;
+                        }
+                    }
+                    catch (ArgumentException c)
+                    {
+                        Console.WriteLine("Zip did not have 5 numbers Ex. 00000");
+                        Console.WriteLine("Try again...");
+                    }
+                }//end zip verification
+
+
+
+
+                /*************************************************************/
+
+
+
+
+                Console.WriteLine("Enter your subscribtion start month as a #. Ex. January is 1: ");
+
+                bool moVerified = false;
+
+                //verifed subMonth is input correctly as a number #
+                while (!moVerified)
+                {
+                    try
+                    {
+                        string month = Console.ReadLine();
+                        int M = int.Parse(month);
+                        if ( M >= 0 && M <= 12)
+                        {
+                            mo = month;
+                            moVerified = true;
+                        }
+                        else
+                        {
+                            throw new ArgumentException();
+                        }
+                    }
+                    catch (ArgumentException d)
+                    {
+                        Console.WriteLine("Not a valid Month. Use a number 1 - 12");
+                        Console.WriteLine("Try again...");
+                    }
+                }//end month verification
+
+
+
+
+                /*************************************************************/
+
+
+
+
+                customers.Add(new Customer(f, l, dob, zip, mo));
+   
+
+                Console.WriteLine("Are you done?   y/n");
+                char answer = char.Parse(Console.ReadLine());
+
+                if (answer == 'y')
+                {
+                    exit = true;
+                  
+                }
+               
+
+                Console.Clear();
+            }//end while customers loop
+
+            customers.Sort((x, y) => x.lastName.CompareTo(y.lastName));
+
+            foreach (Customer c in customers)
+            {
+                Console.WriteLine();
+                c.Print();
+                Console.WriteLine("-----------------");
+               
+            }
+        }
+    }
+}
